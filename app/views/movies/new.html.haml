@@ -1,0 +1,18 @@
+%h1 MovieRama
+%h2 Create New Movie
+
+= form_tag movies_path do
+
+   = label :movie, :title, 'Title:'
+   %p
+   = text_field :movie, 'title'
+   %p
+   = label :movie, :text, 'Description:'
+   %p
+   = text_area :movie, 'text', :rows=>5, :cols=>80
+   %p
+   = submit_tag 'Save Changes'
+
+%p   
+= link_to 'Back to Index', movies_path
+

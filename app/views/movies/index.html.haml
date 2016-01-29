@@ -1,0 +1,25 @@
+%table{:style => 'width: 100%;'}
+   %tr
+      %td 
+         %h1 MovieRama
+      %td{:style => 'text-align: right;'} Welcome, User ||
+      %td= link_to 'Login/Logout - Register TODO', '/'
+
+%table
+   %tr
+      %td Sort by:
+      %td= link_to 'Date added', '/'
+      %td |
+      %td= link_to 'Likes', '/'
+      %td |
+      %td= link_to 'Title', '/'
+
+%table{:style => 'width: 100%;'}
+   %tr
+   - @movies.each do |movie|
+      %p
+         %tr= link_to movie.title, movie_path(movie)
+         %p
+         %tr= movie.text
+         
+= link_to 'New Movie', new_movie_path
