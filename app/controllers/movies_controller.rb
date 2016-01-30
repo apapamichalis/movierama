@@ -1,6 +1,15 @@
 class MoviesController < ApplicationController
    def index
-      @movies = Movie.all
+      sort = params[:sort]
+      case sort
+      when 'date_added'
+         ordering, @most_recent = {:created_at => :desc}
+      when 'hates'
+         ordering, @most_hates = {:created_at => :asc}
+      when 'likes'
+         ordering, @most_likes = {:created_at => :desc}
+      end
+      @movies = Movie.all.order(ordering)
    end
    
    def show

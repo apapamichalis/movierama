@@ -8,11 +8,11 @@
 %table
    %tr
       %td Sort by:
-      %td= link_to 'Date added', '/'
+      %td= link_to 'Most Recent', movies_path(:sort => 'date_added')
       %td |
-      %td= link_to 'Likes', '/'
+      %td= link_to 'Likes', movies_path(:sort => 'likes')
       %td |
-      %td= link_to 'Title', '/'
+      %td= link_to 'Hates', movies_path(:sort => 'hates')
 
 %table{:style => 'width: 100%;'}
    %tr
@@ -20,6 +20,10 @@
       %p
          %tr= link_to movie.title, movie_path(movie)
          %p
+         %tr= "Posted by TODO add uploader, "
+         %tr= " " << time_ago_in_words(movie.created_at) << " ago"
+         %p
          %tr= movie.text
+         
          
 = link_to 'New Movie', new_movie_path

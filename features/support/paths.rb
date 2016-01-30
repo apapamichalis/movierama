@@ -14,7 +14,7 @@ module NavigationHelpers
     case page_name
 
     
-    when /^the (movieRama )?home\s?page$/
+    when /^the (MovieRama )?home\s?page$/
       '/movies'
     
     when /^the (edit|details) page for "(.*)"$/
