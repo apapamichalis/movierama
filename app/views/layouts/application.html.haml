@@ -1,0 +1,36 @@
+!!!
+%html
+   %head
+      %title MovieRama
+      = stylesheet_link_tag "movierama"
+      = javascript_include_tag "movierama"
+      = csrf_meta_tag
+   %body
+      .topbar
+         .fill
+         .container
+            %table{:style => 'width: 100%;'}
+               %tr
+               %td 
+                  %h1 MovieRama
+               %td{:style => 'text-align: right;'} Welcome, User ||
+               %td= link_to 'Login/Logout - Register TODO', '/'
+
+      .container
+         .content
+         .page-header
+            = yield :header
+         .row
+            - if flash[:alert]
+               .alert-message.error
+               %p= flash[:alert]
+            - if flash[:notice]
+               .alert-message.info
+               %p= flash[:notice]
+            .span10
+               = yield
+            .span4
+               = yield :sidebar
+               .block.notice
+                  %h4 MovieRama
+

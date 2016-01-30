@@ -1,10 +1,3 @@
-%table{:style => 'width: 100%;'}
-   %tr
-      %td 
-         %h1 MovieRama
-      %td{:style => 'text-align: right;'} Welcome, User ||
-      %td= link_to 'Login/Logout - Register TODO', '/'
-
 %table
    %tr
       %td Sort by:
@@ -24,6 +17,5 @@
          %tr= " " << time_ago_in_words(movie.created_at) << " ago"
          %p
          %tr= movie.text
-         
          
 = link_to 'New Movie', new_movie_path
