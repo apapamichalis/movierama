@@ -49,6 +49,12 @@ end
 #Given /^(?:|I )am on (.+)$/ do |page_name|
 #  visit path_to(page_name)
 #end
+Given(/^I am logged in as "([^"]*)"$/) do |user|
+  visit path_to('login page')
+  fill_in "Email", :with => user
+  fill_in "Password", :with => "12345678"
+  click_button "Log in"
+end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
@@ -116,6 +122,14 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
   end
 end
 
+Then /^(?:|I )should not see "([^"]*)"$/ do |text|
+  if page.respond_to? :should_not
+    page.should_not have_content(text)
+  else
+    assert page.has_content?(text)
+  end
+end
+
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
 
@@ -131,7 +145,7 @@ Then /^the director of "([^"]*)" should be "([^"]*)"$/ do |title, the_director|
   movie = Movie.find_by_title(title)
   movie.director.should == the_director
 end
-
+=begin
 Then /^(?:|I )should not see "([^"]*)"$/ do |text|
   if page.respond_to? :should
     page.should have_no_content(text)
@@ -149,7 +163,7 @@ Then /^(?:|I )should not see \/([^\/]*)\/$/ do |regexp|
     assert page.has_no_xpath?('//*', :text => regexp)
   end
 end
-
+=end
 Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field, parent, value|
   with_scope(parent) do
     field = find_field(field)

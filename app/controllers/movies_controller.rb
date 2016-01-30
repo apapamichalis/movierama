@@ -9,7 +9,13 @@ class MoviesController < ApplicationController
       when 'likes'
          ordering, @most_likes = {:created_at => :desc}
       end
-      @movies = Movie.all.order(ordering)
+      @filter_by = params[:user] || {}
+      if @filter_by == {}
+         @movies = @movies = Movie.all.order(ordering)
+      
+      else
+        @movies = Movie.where(user_id: @filter_by).order(ordering) 
+     end
    end
    
    def show
@@ -20,9 +26,15 @@ class MoviesController < ApplicationController
    end
    
    def create
-      @movie = Movie.new(movie_params)
-      @movie.save
-      redirect_to @movie
+      if current_user && User.find(current_user.id)
+         @movie = Movie.new(movie_params)
+         @movie.user = current_user
+         @movie.save
+         redirect_to @movie
+      else
+         flash[:notice] = "Please login before you can add a new movie"
+         redirect_to new_user_session_path
+      end
    end
    
    def edit
@@ -31,21 +43,29 @@ class MoviesController < ApplicationController
    
    def update
       @movie = Movie.find params[:id]
-      @movie.update_attributes!(movie_params)
-      
-      redirect_to movie_path(@movie)
-  end
+      if @movie.user != nil && current_user == @movie.user
+         @movie.update_attributes!(movie_params)
+         redirect_to movie_path(@movie)
+      else
+         flash[:notice] = "Only the creator of a movie can edit it!!!"
+         redirect_to movies_path
+      end
+   end
    
    def destroy
       @movie = Movie.find(params[:id])
-      @movie.destroy
+      if @movie.user != nil && current_user == @movie.user
+         @movie.destroy
+      else
+         flash[:notice] = "Only the creator of a movie can delete it!!!"
+      end
       redirect_to movies_path
    end
    
    private
    
-      def movie_params
-         params.require(:movie).permit(:title, :text)
-      end
+   def movie_params
+      params.require(:movie).permit(:title, :text)
+   end
    
 end
