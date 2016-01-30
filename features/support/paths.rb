@@ -24,6 +24,12 @@ module NavigationHelpers
      when  /^new movie page/
       '/movies/new'
       
+      when /^signup page/
+        '/users/sign_up'
+        
+      when /^login page/
+        '/users/sign_in'
+      
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

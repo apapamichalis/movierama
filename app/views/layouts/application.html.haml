@@ -4,6 +4,7 @@
       %title MovieRama
       = stylesheet_link_tag "movierama"
       = javascript_include_tag "movierama"
+      = javascript_include_tag "application"
       = csrf_meta_tag
    %body
       .topbar
@@ -13,12 +14,28 @@
                %tr
                %td 
                   %h1 MovieRama
-               %td{:style => 'text-align: right;'} Welcome, User ||
-               %td= link_to 'Login/Logout - Register TODO', '/'
-
+                  
+               -#%td{:style => 'text-align: right;'} Welcome, 
+               - if  user_signed_in?
+                  %td{:style => 'text-align: right;'} 
+                     Welcome,
+                     = link_to " #{current_user.name}", edit_user_registration_path
+                     |
+                     = (link_to "Logout", destroy_user_session_path, :method => :delete)
+               - else
+                  %td{:style => 'text-align: right;'} 
+                     Welcome, Guest ||
+                     = link_to "Sign up", new_user_registration_path 
+                     |
+                     = link_to "Login", new_user_session_path
+               
       .container
          .content
          .page-header
+            - if notice
+               %p.alert.alert-success= notice
+            - if alert
+               %p.alert.alert-danger= alert
             = yield :header
          .row
             - if flash[:alert]
