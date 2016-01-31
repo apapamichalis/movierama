@@ -22,5 +22,19 @@
          %tr= " " << time_ago_in_words(movie.created_at) << " ago"
          %p
          %tr= movie.text
+         %p= "This movie has #{movie.likes_count} likes | #{movie.hates_count} hates"
+         - if current_user && User.find(current_user.id)
+            = form_tag movie_votes_path(movie) do
+               = hidden_field_tag :choice => "like"
+               = hidden_field_tag :user_id => current_user.id
+               = submit_tag 'Like'
+         - if current_user && User.find(current_user.id)
+            - if Vote.find_by(user_id: current_user.id, movie_id :movie.id).exists?
+               - =link_to "Unvote", movie_vote_path( :movie_id => movie.id, :id => movie.User.find_by_id(current_user.id).votes.id), :method => :delete
+               -#= link_to "Unvote", movie_vote_path( :movie_id => movie.id, :id => vote.id), :method => :delete
+         = link_to 'Like', movie_votes_path( :movie_id => movie.id, :choice => :like ), :method => :post
+         = " | "
+         = link_to 'Hate', movie_votes_path( :movie_id => movie.id, :choice => :hate ), :method => :post
+      %p= "___"
          
 = link_to 'New Movie', new_movie_path

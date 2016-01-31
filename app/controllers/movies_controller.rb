@@ -12,10 +12,9 @@ class MoviesController < ApplicationController
       @filter_by = params[:user] || {}
       if @filter_by == {}
          @movies = @movies = Movie.all.order(ordering)
-      
       else
-        @movies = Movie.where(user_id: @filter_by).order(ordering) 
-     end
+         @movies = Movie.where(user_id: @filter_by).order(ordering) 
+      end
    end
    
    def show
@@ -42,7 +41,7 @@ class MoviesController < ApplicationController
    end
    
    def update
-      @movie = Movie.find params[:id]
+      @movie = Movie.find(params[:id])
       if @movie.user != nil && current_user == @movie.user
          @movie.update_attributes!(movie_params)
          redirect_to movie_path(@movie)
