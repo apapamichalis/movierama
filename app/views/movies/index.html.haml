@@ -13,11 +13,12 @@
       %p
          %tr= link_to movie.title, movie_path(movie)
          %p
-         %tr= "Posted by "
+         %tr
          - if movie.user_id
+            = "Posted by "
             = link_to movie.user.name, movies_path(:user => movie.user.id)
          - else
-            = " unknown"
+            = "Posted by unknown"
          %tr= " " << time_ago_in_words(movie.created_at) << " ago"
          %p
          %tr= movie.text

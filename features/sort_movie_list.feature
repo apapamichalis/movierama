@@ -19,9 +19,4 @@ Scenario: sort movies by date
   When I follow "Most Recent"
   Then I should see "Terminator" before "Alien"
   And  I should see "pi" before "Blade Runner"
-  # your steps here
 
-#Scenario: sort movies in increasing order of release date
- # When I follow "Release Date"
-  #Then I should see "2000-06-21" before "2004-11-05"
-  # your steps here

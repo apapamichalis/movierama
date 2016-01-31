@@ -12,6 +12,6 @@ Then /I should see the movie "(.*)" with description "(.*)"/ do |title, descript
   page.should have_content(title) and page.should have_content(description)
 end
 
-Then /I should not see the movie "(.*)" with description "(.*)"/ do |title, description|
-  page.should_not have_content(title) and page.should_not have_content(description)
+Then(/^I should not see the movie "([^"]*)"$/) do |title|
+  page.should_not have_content(title)
 end
