@@ -1,19 +1,20 @@
 class MoviesController < ApplicationController
    def index
-      sort = params[:sort]
-      case sort
+      #prefer this method as it produces much less queries than calculating likes for each movie and then ordering movies according to the results
+      case params[:sort]
       when 'date_added'
-         ordering, @most_recent = {:created_at => :desc}
+         @movies ||= Movie.all.order(:created_at => :desc) 
       when 'hates'
-         ordering, @most_hates = {:created_at => :asc}
+         @movies = Movie.find_by_sql('SELECT m.*,count(v.hate) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY count(v.hate) DESC')
       when 'likes'
-         ordering, @most_likes = {:created_at => :desc}
+         @movies = Movie.find_by_sql('SELECT m.*,count(v.like) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY count(v.like) DESC')
       end
+      
       @filter_by = params[:user] || {}
       if @filter_by == {}
-         @movies = @movies = Movie.all.order(ordering)
+         @movies ||= Movie.all
       else
-         @movies = Movie.where(user_id: @filter_by).order(ordering) 
+         @movies ||= Movie.where(user_id: @filter_by)
       end
    end
    

@@ -13,10 +13,11 @@ class VotesController < ApplicationController
       when "like"
         @vote.like = 1
         @vote.save
-        flash[:notice] = "LIKED!!!"
+        flash[:notice] = "LIKED #{@movie.title.upcase}!!!"
       when "hate"
         @vote.hate = 1
         @vote.save
+        flash[:notice] = "HATED #{@movie.title.upcase}!!!"
       else
         flash[:notice] = "Not the right way to vote!"
       end

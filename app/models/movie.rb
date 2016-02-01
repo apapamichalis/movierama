@@ -3,7 +3,9 @@ class Movie < ActiveRecord::Base
    has_many :votes, dependent: :destroy
    validates :title, length: { minimum: 1 }
    
-   def likes_count
+   # TODO cache the results
+   
+   def likes_count   
       votes.sum(:like)
    end
    
