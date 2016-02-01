@@ -1,10 +1,9 @@
 %h2 Details about #{@movie.title}
 
 %p
-%h3 Description:
+= render 'movie_partial', :movie => @movie
 
-%p#description= @movie.text
-
+%p
 = link_to 'Edit Movie', edit_movie_path(@movie)
 %td ||
 = link_to 'Delete Movie', movie_path(@movie), :method => :delete

@@ -1,13 +1,17 @@
 class MoviesController < ApplicationController
    def index
-      #prefer this method as it produces much less queries than calculating likes for each movie and then ordering movies according to the results
+=begin 
+Sorting by likes/ hates could be done in more elegant-Rubyist way by gathering @movies = Movies.all, and then 
+calculating total votes for each one and then sorting by votes through likes_count/ hates_count. But the result 
+of that would be many more queries and I wanted to avoid that.
+=end
       case params[:sort]
       when 'date_added'
          @movies ||= Movie.all.order(:created_at => :desc) 
       when 'hates'
-         @movies = Movie.find_by_sql('SELECT m.*,count(v.hate) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY count(v.hate) DESC')
+         @movies = Movie.find_by_sql('SELECT m.*,count(v.hate) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY sum(v.hate) DESC')
       when 'likes'
-         @movies = Movie.find_by_sql('SELECT m.*,count(v.like) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY count(v.like) DESC')
+         @movies = Movie.find_by_sql('SELECT m.*,count(v.like) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY sum(v.like) DESC')
       end
       
       @filter_by = params[:user] || {}

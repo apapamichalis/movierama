@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root :to => redirect('/movies')
   devise_for :users, :controllers => { registrations: 'registrations' }
-  #devise_for :users
+
   
   resources :movies do
     resources :votes , only: [:create, :destroy]

@@ -1,0 +1,23 @@
+%tr= link_to movie.title, movie_path(movie)
+%p
+%tr
+- if movie.user_id
+   = "Posted by "
+   = link_to movie.user.name, movies_path(:user => movie.user.id)
+- else
+   = "Posted by unknown"
+%tr= " " << time_ago_in_words(movie.created_at) << " ago"
+%p
+%tr= movie.text
+%p= "This movie has #{movie.likes_count} likes | #{movie.hates_count} hates"
+- if current_user && User.find(current_user.id) && current_user!= movie.user
+   - this_vote = Vote.find_by(user_id: current_user.id, movie_id: movie.id)  
+   - if this_vote
+      - this_vote.like == 1 ? your_vote = 'liked' : your_vote = 'hated' 
+      = "You #{your_vote} this movie!|"
+      = link_to "Un#{your_vote[0...-1]}", movie_vote_path( :movie_id => movie.id, :id => this_vote.id), :method => :delete
+   - else
+      = link_to 'Like', movie_votes_path( :movie_id => movie.id, :choice => :like ), :method => :post
+      = " | "
+      = link_to 'Hate', movie_votes_path( :movie_id => movie.id, :choice => :hate ), :method => :post
+      

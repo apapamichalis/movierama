@@ -16,7 +16,7 @@ Background: movies have been added to database
   And I am on the MovieRama home page
 
 Scenario: sort movies by date
-  When I follow "Most Recent"
+  When I follow "Recent"
   Then I should see "Terminator" before "Alien"
   And  I should see "pi" before "Blade Runner"
 

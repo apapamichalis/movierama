@@ -12,30 +12,28 @@ class VotesController < ApplicationController
       case params[:choice]
       when "like"
         @vote.like = 1
-        @vote.save
-        flash[:notice] = "LIKED #{@movie.title.upcase}!!!"
+        @vote.save ? flash[:notice] = "LIKED #{@movie.title.upcase}!!!" : flash[:notice] = "Something went wrong with your vote!"
       when "hate"
         @vote.hate = 1
-        @vote.save
-        flash[:notice] = "HATED #{@movie.title.upcase}!!!"
+        @vote.save ? flash[:notice] = "HATED #{@movie.title.upcase}!!!" : flash[:notice] = "Something went wrong with your vote!"
       else
         flash[:notice] = "Not the right way to vote!"
       end
     end
-    redirect_to movies_path
+    redirect_to :back
   end
     
   def destroy
     if current_user && User.find(current_user.id)
       @vote = Vote.find(params[:id])
-      if current_user == @vote.user
+      if current_user == @vote.user  # checking if current_user was indeed the one sending the request
         @vote.destroy
         flash[:notice] = "Vote deleted"
       end
     else
-      flash[:notice] = "Vote not found"
+      flash[:notice] = "Vote not deleted"
     end
-    redirect_to movies_path
+    redirect_to :back
   end
   
   private
