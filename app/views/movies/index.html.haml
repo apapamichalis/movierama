@@ -1,20 +1,14 @@
-%table#sort_by
-   %tr#sort_by
-      %td Sort by (most):
-      %td= link_to 'Recent', movies_path(:sort => 'date_added')
-      %td |
-      %td= link_to 'Likes', movies_path(:sort => 'likes')
-      %td |
-      %td= link_to 'Hates', movies_path(:sort => 'hates')
-      %td ||
-      %td= link_to 'Reset', movies_path
-%li
-%li
-%table
-   %tr
+#sorts
+   Sort by (most):
+   = link_to 'Recent', movies_path(:sort => 'date_added')
+   = " | "
+   = link_to 'Likes', movies_path(:sort => 'likes')
+   = " | "
+   = link_to 'Hates', movies_path(:sort => 'hates')
+   = " || "
+   = link_to 'Reset', movies_path
+#movies-list
    - @movies.each do |movie|
-      %tr
-         = render 'movie_partial', :movie => movie
-         %li= "___"
-         %li
+      = render 'movie_partial', :movie => movie
+
 = link_to 'New Movie', new_movie_path

@@ -7,13 +7,12 @@ of that would be many more queries and I wanted to avoid that.
 =end
       case params[:sort]
       when 'date_added'
-         @movies ||= Movie.all.order(:created_at => :desc) 
+         @movies = Movie.all.order(:created_at => :desc) 
       when 'hates'
          @movies = Movie.find_by_sql('SELECT m.*,count(v.hate) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY sum(v.hate) DESC')
       when 'likes'
          @movies = Movie.find_by_sql('SELECT m.*,count(v.like) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY sum(v.like) DESC')
       end
-      
       @filter_by = params[:user] || {}
       if @filter_by == {}
          @movies ||= Movie.all

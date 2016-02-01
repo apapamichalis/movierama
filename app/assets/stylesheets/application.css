@@ -1,8 +1,70 @@
-table#sort_by{
-   width: 100%;
-   font-size: 120%;
-   font-style: bold;
-   display: block;
-   background-color: #00fafa;
+#container{width: 100%;}
+#container > div{
+   width: 60%; 
+   margin: 0 auto;}
+#sorts{
+   background-color: #1C75BC;
+   color: white;
+   padding: 15px;
 }
+#sorts > a,
+#sorts > a:visited,
+#sorts > a:active {
+   color: #FFF;
+   padding: 0 20px;
+   font-weight: bold;
+   text-decoration: none;
+}
+#sorts > a:hover{
+   background-color: #1E5A82;
+   border: 1px solid white;
+}
+
+#movies-list{
+   width: 100%;
+}
+.movie-block{
+   border: 1px solid #ddd;
+   margin: 10px 0;
+   padding: 20px;
+   background-color: #eee;
+}
+.movie-title{text-align: center;
+margin-bottom: 10px;
+border-bottom: 1px solid #aaa;
+padding-bottom: 10px;}
+.movie-poster{
+   margin-bottom: 5px;
+font-style: italic;}
+.movie-desc{margin-bottom: 20px;}
+.movie-score{text-align: right;
+font-size: 14px;}
+.movie-rating{text-align: center;}
+.movie-actions{text-align: center;}
+
+.movie-title > a{font-size: 16px;}
+.movie-poster > a{font-size: 14px;}
+.movie-rating > a{font-size: 14px;}
+.movie-actions > a{font-size: 14px;}
+
+
+.movie-title > a,
+.movie-title > a:hover,
+.movie-title > a:visited,
+.movie-title > a:active,
+.movie-poster > a,
+.movie-poster > a:hover,
+.movie-poster > a:visited,
+.movie-poster > a:active,
+.movie-actions > a,
+.movie-actions > a:hover,
+.movie-actions > a:visited,
+.movie-actions > a:active,
+.movie-rating > a,
+.movie-rating > a:hover,
+.movie-rating > a:visited,
+.movie-rating > a:active{font-weight: bold; text-decoration: none; color: #444;}
+
+
+
 

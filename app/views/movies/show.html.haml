@@ -1,11 +1,10 @@
-%h2 Details about #{@movie.title}
-
-%p
-= render 'movie_partial', :movie => @movie
-
-%p
-= link_to 'Edit Movie', edit_movie_path(@movie)
-%td ||
-= link_to 'Delete Movie', movie_path(@movie), :method => :delete
-%td ||
-= link_to 'Back to Index', movies_path
+.movie-details
+   %h2 Details about #{@movie.title}
+   .show-movie
+      = render 'movie_partial', :movie => @movie
+   .movie-actions
+      = link_to 'Edit Movie', edit_movie_path(@movie)
+      = " || "
+      = link_to 'Delete Movie', movie_path(@movie), :method => :delete
+      = " || "
+      = link_to 'Back to Index', movies_path
