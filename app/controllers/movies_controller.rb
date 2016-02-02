@@ -5,19 +5,18 @@ Sorting by likes/ hates could be done in more elegant-Rubyist way by gathering @
 calculating total votes for each one and then sorting by votes through likes_count/ hates_count. But the result 
 of that would be many more queries and I wanted to avoid that.
 =end
-      case params[:sort]
-      when 'date_added'
+      sort = params[:sort]
+      if sort == 'date_added'
          @movies = Movie.all.order(:created_at => :desc) 
-      when 'hates'
-         @movies = Movie.find_by_sql('SELECT m.*,count(v.hate) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY sum(v.hate) DESC')
-      when 'likes'
-         @movies = Movie.find_by_sql('SELECT m.*,count(v.like) FROM Movies m LEFT JOIN Votes v ON m.id=v.movie_id GROUP BY m.id ORDER BY sum(v.like) DESC')
+      elsif sort == 'like' || sort == 'hate' 
+         @movies = Movie.join_votes.order("sum(votes.#{sort}) DESC")
       end
+      
       @filter_by = params[:user] || {}
       if @filter_by == {}
          @movies ||= Movie.all
       else
-         @movies ||= Movie.where(user_id: @filter_by)
+         @movies ||= Movie.where(user_id: @filter_by).join_votes.order("sum(votes.hate) DESC")
       end
    end
    
