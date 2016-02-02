@@ -1,22 +1,14 @@
 class MoviesController < ApplicationController
    def index
-=begin 
-Sorting by likes/ hates could be done in more elegant-Rubyist way by gathering @movies = Movies.all, and then 
-calculating total votes for each one and then sorting by votes through likes_count/ hates_count. But the result 
-of that would be many more queries and I wanted to avoid that.
-=end
-      sort = params[:sort]
-      if sort == 'date_added'
-         @movies = Movie.all.order(:created_at => :desc) 
-      elsif sort == 'like' || sort == 'hate' 
-         @movies = Movie.join_votes.order("sum(votes.#{sort}) DESC")
-      end
-      
       @filter_by = params[:user] || {}
-      if @filter_by == {}
-         @movies ||= Movie.all
+      if params[:sort] == 'date_added'
+         @movies = Movie.order(:created_at => :desc) 
+      elsif params[:sort] == 'like' || params[:sort] == 'hate'
+         @movies = Movie.join_votes_on_movies.order("sum(votes.#{params[:sort]}) DESC")
+      elsif @filter_by != {}
+         @movies = Movie.where(user_id: @filter_by)
       else
-         @movies ||= Movie.where(user_id: @filter_by).join_votes.order("sum(votes.hate) DESC")
+         @movies = Movie.all
       end
    end
    

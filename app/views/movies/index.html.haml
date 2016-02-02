@@ -6,7 +6,7 @@
    = " | "
    = link_to 'Hates', movies_path(:sort => 'hate')
    = " || "
-   = link_to 'Reset', movies_path(:reset => true)
+   = link_to 'Reset', movies_path
 #movies-list
    - @movies.each do |movie|
       = render 'movie_partial', :movie => movie
