@@ -3,8 +3,9 @@
    .show-movie
       = render 'movie_partial', :movie => @movie
    .movie-actions
-      = link_to 'Edit Movie', edit_movie_path(@movie)
-      = " || "
-      = link_to 'Delete Movie', movie_path(@movie), :method => :delete
-      = " || "
+      - if current_user && User.find(current_user.id) && current_user == @movie.user
+         = link_to 'Edit Movie', edit_movie_path(@movie)
+         = " || "
+         = link_to 'Delete Movie', movie_path(@movie), :method => :delete
+         = " || "
       = link_to 'Back to Index', movies_path
